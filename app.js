@@ -7,7 +7,7 @@ import chalk from 'chalk';
 
 // import r1 from './riddles/r1.js';
 // import r2 from './riddles/r2.js';
-console.log(AllRiddles);
+//console.log(AllRiddles);
 //AllRiddles[0].ask();
 
 console.log(chalk.green(`Welcome to the Riddle Game! `))
