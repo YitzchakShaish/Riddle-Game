@@ -1,11 +1,5 @@
-import { Riddele } from "../classes/Riddele.js";
+import { MultipleChoiceRiddle } from "../classes/MultipleChoiceRiddle.js";
 
-let r2 = new Riddele(2,"Easy Math","What is 5 ^3?","125" );
+let r2 = new MultipleChoiceRiddle(2, "Color Mix", 1, "What color do you get when you mix red and blue?", "Purple", ["Green", "Purple", "Orange", "Brown"]);
 
-
-export default 
-  r2
-;
-
-
-
+export default r2;
