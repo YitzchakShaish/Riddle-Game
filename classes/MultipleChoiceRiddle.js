@@ -4,8 +4,8 @@ import chalk from "chalk";
 import {question} from "readline-sync";
 
 class MultipleChoiceRiddle extends Riddele {
-  constructor(id, name, taskDescription, correctAnswer, choices) {
-    super(id, name, taskDescription, correctAnswer);
+  constructor(id, name, riddeleStarts, taskDescription, correctAnswer, choices) {
+    super(id, name, riddeleStarts, taskDescription, correctAnswer);
     this.choices = choices;
   }
 
