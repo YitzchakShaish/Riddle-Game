@@ -24,6 +24,4 @@ showPlayer(){
 
 }
 
-export default{
-    Player
-}
+export default Player
