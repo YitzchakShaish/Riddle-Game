@@ -8,7 +8,7 @@ function readRiddles(filePath) {
     })
     .catch(err => {
       console.log("Error reading riddles:", err);
-      throw err; // כדי לא לעצור את השרשרת
+      throw err; 
     });
 }
 
