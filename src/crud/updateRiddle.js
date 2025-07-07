@@ -1,42 +1,60 @@
 import fu from 'file:///C:/Users/LENOVO/coors-arava/week_8/Riddle%20Game/utils/fileUtils.js';
+import readline from "readline";
 
-function updateRiddle(filePath, updatedRiddle) {
-  fu.doesRiddleIdExist(filePath, updatedRiddle.id).then(exists => {
-    if (!exists) {
-      console.log(`Riddle with ID ${updatedRiddle.id} not found. Update failed.`);
-      return;
-    }
+const dbpath = "C:\\Users\\LENOVO\\coors-arava\\week_8\\Riddle Game\\riddles\\riddles_open.txt";
 
-    fu.readFile(filePath)
-      .then((arr) => {
-        const index = arr.findIndex(riddle => riddle.id === updatedRiddle.id);
 
-        arr[index] = updatedRiddle; 
+async function askRiddleData(filePath) {
+  const id = await fu.askForExistingId(filePath);
 
-        fu.writeFile(filePath, arr)
-          .then(() => {
-            console.log(`Riddle with ID ${updatedRiddle.id} updated successfully.`);
-          })
-          .catch(err => {
-            console.log("Error writing file:", err);
-          });
-      })
-      .catch(err => {
-        console.log("Error reading file:", err);
+  return new Promise((resolve) => {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+
+    const riddle = { id };
+
+    rl.question("Enter riddle name: ", (name) => {
+      riddle.name = name;
+
+      rl.question("Enter riddle description: ", (desc) => {
+        riddle.taskDescription = desc;
+
+        rl.question("Enter correct answer: ", (answer) => {
+          riddle.correctAnswer = answer;
+
+          rl.close();
+          resolve(riddle);
+        });
       });
+    });
   });
 }
 
 
-const updatedRiddle = {
-  id: 100,
-  name: "The Loud Echo",
-  taskDescription: "I shout without a mouth. What am I?",
-  correctAnswer: "echo"
-};
 
-const dbpath = "C:\\Users\\LENOVO\\coors-arava\\week_8\\Riddle Game\\riddles\\riddles_open.txt";
-updateRiddle(dbpath, updatedRiddle);
+async function updateRiddleIfExists(filePath) {
+  try {
+    const updatedRiddle = await askRiddleData(filePath);
+    console.log(`update`);
+    const riddles = await  fu.readFile(filePath);
+    const index = await riddles.findIndex(riddle => riddle.id === updatedRiddle.id);
+    console.log(`index `+index);
+    
+     riddles[index] =await updatedRiddle; 
+     console.log(`rissles`);
+     
+  
+    await fu.writeFile(filePath, riddles);
+    console.log(`Riddle with ID ${updatedRiddle.id} updete successfully.`);
+  } catch (err) {
+    console.error("Failed to updete riddle:", err.message || err);
+  }
+}
 
 
-export default updateRiddle;
+updateRiddleIfExists(dbpath);
+
+
+export default updateRiddleIfExists;
